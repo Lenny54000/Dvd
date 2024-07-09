@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation Logo DVD</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            overflow: hidden;
+        }
+        #logo {
+            position: absolute;
+            width: 264px;
+            height: 190px;
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="logo.png" alt="Logo">
+
+    <script>
+        let logo = document.getElementById('logo');
+        let posX = 0;
+        let posY = 0;
+        let velX = 2;
+        let velY = 2;
+        let colors = ["#FF5733", "#33FF57", "#3357FF", "#F333FF", "#FFF333"];
+        let lastColor = null;
+
+        function changeBackgroundColor() {
+            let newColor;
+            do {
+                newColor = colors[Math.floor(Math.random() * colors.length)];
+            } while (newColor === lastColor);
+            lastColor = newColor;
+            document.body.style.backgroundColor = newColor;
+        }
+
+        function animate() {
+            posX += velX;
+            posY += velY;
+
+            if (posX + logo.clientWidth > window.innerWidth || posX < 0) {
+                velX *= -1;
+                changeBackgroundColor();
+            }
+            if (posY + logo.clientHeight > window.innerHeight || posY < 0) {
+                velY *= -1;
+                changeBackgroundColor();
+            }
+
+            logo.style.left = posX + 'px';
+            logo.style.top = posY + 'px';
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
